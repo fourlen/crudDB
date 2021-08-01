@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Data;
+using System.Windows.Forms;
 
 namespace SGO3
 {
@@ -32,14 +33,29 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(add_string, conn))
             {
-                cmd.Parameters.AddWithValue("firstname", values[1]);
-                cmd.Parameters.AddWithValue("middlename", values[2]);
-                cmd.Parameters.AddWithValue("lastname", values[3]);
-                cmd.Parameters.AddWithValue("post", values[4]);
-                cmd.Parameters.AddWithValue("science_degree", values[5]);
-                cmd.Parameters.AddWithValue("kafedraid", Convert.ToInt32(values[6]));
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("firstname", values[1]);
+                    cmd.Parameters.AddWithValue("middlename", values[2]);
+                    cmd.Parameters.AddWithValue("lastname", values[3]);
+                    cmd.Parameters.AddWithValue("post", values[4]);
+                    cmd.Parameters.AddWithValue("science_degree", values[5]);
+                    cmd.Parameters.AddWithValue("kafedraid", Convert.ToInt32(values[6]));
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -47,21 +63,36 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(update_string, conn))
             {
-                cmd.Parameters.AddWithValue("newfirstname", newvalues[1]);
-                cmd.Parameters.AddWithValue("newmiddlename", newvalues[2]);
-                cmd.Parameters.AddWithValue("newlastname", newvalues[3]);
-                cmd.Parameters.AddWithValue("newpost", newvalues[4]);
-                cmd.Parameters.AddWithValue("newscience_degree", newvalues[5]);
-                cmd.Parameters.AddWithValue("newkafedraid", Convert.ToInt32(newvalues[6]));
-                cmd.Parameters.AddWithValue("id", Convert.ToInt32(oldvalues[0]));
-                cmd.Parameters.AddWithValue("oldfirstname", oldvalues[1]);
-                cmd.Parameters.AddWithValue("oldmiddlename", oldvalues[2]);
-                cmd.Parameters.AddWithValue("oldlastname", oldvalues[3]);
-                cmd.Parameters.AddWithValue("oldpost", oldvalues[4]);
-                cmd.Parameters.AddWithValue("oldscience_degree", oldvalues[5]);
-                cmd.Parameters.AddWithValue("oldkafedraid", Convert.ToInt32(oldvalues[6]));
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("newfirstname", newvalues[1]);
+                    cmd.Parameters.AddWithValue("newmiddlename", newvalues[2]);
+                    cmd.Parameters.AddWithValue("newlastname", newvalues[3]);
+                    cmd.Parameters.AddWithValue("newpost", newvalues[4]);
+                    cmd.Parameters.AddWithValue("newscience_degree", newvalues[5]);
+                    cmd.Parameters.AddWithValue("newkafedraid", Convert.ToInt32(newvalues[6]));
+                    cmd.Parameters.AddWithValue("id", Convert.ToInt32(oldvalues[0]));
+                    cmd.Parameters.AddWithValue("oldfirstname", oldvalues[1]);
+                    cmd.Parameters.AddWithValue("oldmiddlename", oldvalues[2]);
+                    cmd.Parameters.AddWithValue("oldlastname", oldvalues[3]);
+                    cmd.Parameters.AddWithValue("oldpost", oldvalues[4]);
+                    cmd.Parameters.AddWithValue("oldscience_degree", oldvalues[5]);
+                    cmd.Parameters.AddWithValue("oldkafedraid", Convert.ToInt32(oldvalues[6]));
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -69,15 +100,30 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(delete_string, conn))
             {
-                cmd.Parameters.AddWithValue("id", Convert.ToInt32(values[0]));
-                cmd.Parameters.AddWithValue("firstname", values[1]);
-                cmd.Parameters.AddWithValue("middlename", values[2]);
-                cmd.Parameters.AddWithValue("lastname", values[3]);
-                cmd.Parameters.AddWithValue("post", values[4]);
-                cmd.Parameters.AddWithValue("science_degree", values[5]);
-                cmd.Parameters.AddWithValue("kafedraid", Convert.ToInt32(values[6]));
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("id", Convert.ToInt32(values[0]));
+                    cmd.Parameters.AddWithValue("firstname", values[1]);
+                    cmd.Parameters.AddWithValue("middlename", values[2]);
+                    cmd.Parameters.AddWithValue("lastname", values[3]);
+                    cmd.Parameters.AddWithValue("post", values[4]);
+                    cmd.Parameters.AddWithValue("science_degree", values[5]);
+                    cmd.Parameters.AddWithValue("kafedraid", Convert.ToInt32(values[6]));
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

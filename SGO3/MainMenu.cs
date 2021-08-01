@@ -79,7 +79,14 @@ namespace SGO3
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            state.Create();
+            try
+            {
+                state.Create();
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UpdateButton_Click(object sender, EventArgs e)

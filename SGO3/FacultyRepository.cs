@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Data;
+using System.Windows.Forms;
 
 namespace SGO3
 {
@@ -32,9 +33,23 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(add_string, conn))
             {
-                cmd.Parameters.AddWithValue("name", name);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.Parameters.AddWithValue("name", name);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -42,11 +57,25 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(update_string, conn))
             {
-                cmd.Parameters.AddWithValue("id", Convert.ToInt32(oldvalues[0]));
-                cmd.Parameters.AddWithValue("oldname", oldvalues[1]);
-                cmd.Parameters.AddWithValue("newname", newvalues[1]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.Parameters.AddWithValue("id", Convert.ToInt32(oldvalues[0]));
+                    cmd.Parameters.AddWithValue("oldname", oldvalues[1]);
+                    cmd.Parameters.AddWithValue("newname", newvalues[1]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -54,10 +83,24 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(delete_string, conn))
             {
-                cmd.Parameters.AddWithValue("id", Convert.ToInt32(values[0]));
-                cmd.Parameters.AddWithValue("name", values[1]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.Parameters.AddWithValue("id", Convert.ToInt32(values[0]));
+                    cmd.Parameters.AddWithValue("name", values[1]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

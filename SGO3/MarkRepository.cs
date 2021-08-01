@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Data;
+using System.Windows.Forms;
 
 namespace SGO3
 {
@@ -32,11 +33,25 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(add_string, conn))
             {
-                cmd.Parameters.AddWithValue("mark_value", Convert.ToInt32(values[0]));
-                cmd.Parameters.AddWithValue("studentid", Convert.ToInt32(values[1]));
-                cmd.Parameters.AddWithValue("subjectid", Convert.ToInt32(values[2]));
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.Parameters.AddWithValue("mark_value", Convert.ToInt32(values[0]));
+                    cmd.Parameters.AddWithValue("studentid", Convert.ToInt32(values[1]));
+                    cmd.Parameters.AddWithValue("subjectid", Convert.ToInt32(values[2]));
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -44,14 +59,29 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(update_string, conn))
             {
-                cmd.Parameters.AddWithValue("newmark_value", Convert.ToInt32(newvalues[0]));
-                cmd.Parameters.AddWithValue("newstudentid", Convert.ToInt32(newvalues[1]));
-                cmd.Parameters.AddWithValue("newsubjectid", Convert.ToInt32(newvalues[2]));
-                cmd.Parameters.AddWithValue("oldmark_value", Convert.ToInt32(oldvalues[0]));
-                cmd.Parameters.AddWithValue("oldstudentid", Convert.ToInt32(oldvalues[1]));
-                cmd.Parameters.AddWithValue("oldsubjectid", Convert.ToInt32(oldvalues[2]));
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("newmark_value", Convert.ToInt32(newvalues[0]));
+                    cmd.Parameters.AddWithValue("newstudentid", Convert.ToInt32(newvalues[1]));
+                    cmd.Parameters.AddWithValue("newsubjectid", Convert.ToInt32(newvalues[2]));
+                    cmd.Parameters.AddWithValue("oldmark_value", Convert.ToInt32(oldvalues[0]));
+                    cmd.Parameters.AddWithValue("oldstudentid", Convert.ToInt32(oldvalues[1]));
+                    cmd.Parameters.AddWithValue("oldsubjectid", Convert.ToInt32(oldvalues[2]));
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -59,11 +89,25 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(delete_string, conn))
             {
-                cmd.Parameters.AddWithValue("mark_value", Convert.ToInt32(values[0]));
-                cmd.Parameters.AddWithValue("studentid", Convert.ToInt32(values[1]));
-                cmd.Parameters.AddWithValue("subjectid", Convert.ToInt32(values[2]));
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.Parameters.AddWithValue("mark_value", Convert.ToInt32(values[0]));
+                    cmd.Parameters.AddWithValue("studentid", Convert.ToInt32(values[1]));
+                    cmd.Parameters.AddWithValue("subjectid", Convert.ToInt32(values[2]));
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

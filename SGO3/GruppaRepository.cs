@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Data;
+using System.Windows.Forms;
 
 namespace SGO3
 {
@@ -32,12 +33,27 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(add_string, conn))
             {
-                cmd.Parameters.AddWithValue("code", values[0]);
-                cmd.Parameters.AddWithValue("course", Convert.ToInt32(values[1]));
-                cmd.Parameters.AddWithValue("starosta", values[2]);
-                cmd.Parameters.AddWithValue("speciality_code", values[3]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("code", values[0]);
+                    cmd.Parameters.AddWithValue("course", Convert.ToInt32(values[1]));
+                    cmd.Parameters.AddWithValue("starosta", values[2]);
+                    cmd.Parameters.AddWithValue("speciality_code", values[3]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -45,16 +61,31 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(update_string, conn))
             {
-                cmd.Parameters.AddWithValue("newcode", newvalues[0]);
-                cmd.Parameters.AddWithValue("newcourse", Convert.ToInt32(newvalues[1]));
-                cmd.Parameters.AddWithValue("newstarosta", newvalues[2]);
-                cmd.Parameters.AddWithValue("newspeciality_code", newvalues[3]);
-                cmd.Parameters.AddWithValue("oldcode", oldvalues[0]);
-                cmd.Parameters.AddWithValue("oldcourse", Convert.ToInt32(oldvalues[1]));
-                cmd.Parameters.AddWithValue("oldstarosta", oldvalues[2]);
-                cmd.Parameters.AddWithValue("oldspeciality_code", oldvalues[3]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("newcode", newvalues[0]);
+                    cmd.Parameters.AddWithValue("newcourse", Convert.ToInt32(newvalues[1]));
+                    cmd.Parameters.AddWithValue("newstarosta", newvalues[2]);
+                    cmd.Parameters.AddWithValue("newspeciality_code", newvalues[3]);
+                    cmd.Parameters.AddWithValue("oldcode", oldvalues[0]);
+                    cmd.Parameters.AddWithValue("oldcourse", Convert.ToInt32(oldvalues[1]));
+                    cmd.Parameters.AddWithValue("oldstarosta", oldvalues[2]);
+                    cmd.Parameters.AddWithValue("oldspeciality_code", oldvalues[3]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -62,12 +93,27 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(delete_string, conn))
             {
-                cmd.Parameters.AddWithValue("code", values[0]);
-                cmd.Parameters.AddWithValue("course", Convert.ToInt32(values[1]));
-                cmd.Parameters.AddWithValue("starosta", values[2]);
-                cmd.Parameters.AddWithValue("speciality_code", values[3]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("code", values[0]);
+                    cmd.Parameters.AddWithValue("course", Convert.ToInt32(values[1]));
+                    cmd.Parameters.AddWithValue("starosta", values[2]);
+                    cmd.Parameters.AddWithValue("speciality_code", values[3]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

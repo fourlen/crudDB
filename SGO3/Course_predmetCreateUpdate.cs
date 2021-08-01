@@ -35,7 +35,7 @@ namespace SGO3
             if (cellvalues != null)
             {
                 db.course_PredmetRepository.UpdateString(cellvalues, newvalues);
-            }
+            }   
             else
             {
                 db.course_PredmetRepository.AddNewString(newvalues);

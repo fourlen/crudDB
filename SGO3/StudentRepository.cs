@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Data;
-
+using System.Windows.Forms;
 namespace SGO3
 {
     class StudentRepository
@@ -32,12 +32,27 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(add_string, conn))
             {
-                cmd.Parameters.AddWithValue("firstname", values[1]);
-                cmd.Parameters.AddWithValue("middlename", values[2]);
-                cmd.Parameters.AddWithValue("lastname", values[3]);
-                cmd.Parameters.AddWithValue("gruppacode", values[4]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("firstname", values[1]);
+                    cmd.Parameters.AddWithValue("middlename", values[2]);
+                    cmd.Parameters.AddWithValue("lastname", values[3]);
+                    cmd.Parameters.AddWithValue("gruppacode", values[4]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -45,17 +60,32 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(update_string, conn))
             {
-                cmd.Parameters.AddWithValue("newfirstname", newvalues[1]);
-                cmd.Parameters.AddWithValue("newmiddlename", newvalues[2]);
-                cmd.Parameters.AddWithValue("newlastname", newvalues[3]);
-                cmd.Parameters.AddWithValue("newgruppacode", newvalues[4]);
-                cmd.Parameters.AddWithValue("id", Convert.ToInt32(oldvalues[0]));
-                cmd.Parameters.AddWithValue("oldfirstname", oldvalues[1]);
-                cmd.Parameters.AddWithValue("oldmiddlename", oldvalues[2]);
-                cmd.Parameters.AddWithValue("oldlastname", oldvalues[3]);
-                cmd.Parameters.AddWithValue("oldgruppacode", oldvalues[4]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("newfirstname", newvalues[1]);
+                    cmd.Parameters.AddWithValue("newmiddlename", newvalues[2]);
+                    cmd.Parameters.AddWithValue("newlastname", newvalues[3]);
+                    cmd.Parameters.AddWithValue("newgruppacode", newvalues[4]);
+                    cmd.Parameters.AddWithValue("id", Convert.ToInt32(oldvalues[0]));
+                    cmd.Parameters.AddWithValue("oldfirstname", oldvalues[1]);
+                    cmd.Parameters.AddWithValue("oldmiddlename", oldvalues[2]);
+                    cmd.Parameters.AddWithValue("oldlastname", oldvalues[3]);
+                    cmd.Parameters.AddWithValue("oldgruppacode", oldvalues[4]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -63,13 +93,28 @@ namespace SGO3
         {
             using (var cmd = new NpgsqlCommand(delete_string, conn))
             {
-                cmd.Parameters.AddWithValue("id", Convert.ToInt32(values[0]));
-                cmd.Parameters.AddWithValue("firstname", values[1]);
-                cmd.Parameters.AddWithValue("middlename", values[2]);
-                cmd.Parameters.AddWithValue("lastname", values[3]);
-                cmd.Parameters.AddWithValue("gruppacode", values[4]);
-                cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                
+                try
+                {
+                    cmd.Parameters.AddWithValue("id", Convert.ToInt32(values[0]));
+                    cmd.Parameters.AddWithValue("firstname", values[1]);
+                    cmd.Parameters.AddWithValue("middlename", values[2]);
+                    cmd.Parameters.AddWithValue("lastname", values[3]);
+                    cmd.Parameters.AddWithValue("gruppacode", values[4]);
+                }
+                catch (System.FormatException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                try
+                {
+                    cmd.Prepare();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Npgsql.PostgresException exc)
+                {
+                    MessageBox.Show(exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }
